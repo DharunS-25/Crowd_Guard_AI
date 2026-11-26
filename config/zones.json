@@ -1,0 +1,94 @@
+{
+  "description": "Illustrative normalized polygons. Adjust these points to match your camera view. Coordinates are fractions of frame width/height, from 0.0 to 1.0.",
+  "zones": {
+    "STAGE": [
+      [
+        0.2,
+        0.02
+      ],
+      [
+        0.8,
+        0.02
+      ],
+      [
+        0.8,
+        0.22
+      ],
+      [
+        0.2,
+        0.22
+      ]
+    ],
+    "MAIN": [
+      [
+        0.08,
+        0.23
+      ],
+      [
+        0.92,
+        0.23
+      ],
+      [
+        0.92,
+        0.72
+      ],
+      [
+        0.08,
+        0.72
+      ]
+    ],
+    "ENTRY": [
+      [
+        0.02,
+        0.74
+      ],
+      [
+        0.48,
+        0.74
+      ],
+      [
+        0.48,
+        0.98
+      ],
+      [
+        0.02,
+        0.98
+      ]
+    ],
+    "EXIT": [
+      [
+        0.52,
+        0.74
+      ],
+      [
+        0.98,
+        0.74
+      ],
+      [
+        0.98,
+        0.98
+      ],
+      [
+        0.52,
+        0.98
+      ]
+    ]
+  },
+  "capacities": {
+    "STAGE": 50,
+    "MAIN": 150,
+    "ENTRY": 40,
+    "EXIT": 40
+  },
+  "flow_line": {
+    "from": [
+      0.5,
+      0.72
+    ],
+    "to": [
+      0.5,
+      0.98
+    ],
+    "label": "illustrative flow line"
+  }
+}
