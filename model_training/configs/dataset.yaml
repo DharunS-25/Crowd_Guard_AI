@@ -1,0 +1,149 @@
+# =============================================================================
+# CrowdGuard AI — Dataset Configuration
+# UCSD Anomaly Detection Dataset (Peds1 + Peds2)
+# =============================================================================
+
+dataset:
+  name: "UCSD Anomaly Detection Dataset"
+  description: >
+    Binary-labelled pedestrian walkway anomaly detection dataset.
+    Labels: 0 = Normal, 1 = Anomalous.
+    NOTE: These are anomaly labels, NOT validated crowd-risk classes.
+    This model performs anomaly detection as a PROXY for crowd-risk estimation.
+    Real-world risk labels require additional expert annotation.
+  source_url: "https://www.kaggle.com/datasets/orvile/ucsd-anomaly-dataset"
+  license: "CC BY 4.0"
+
+  # Raw data location (relative to model_training/)
+  raw_dir: "data/raw/ucsd"
+  processed_dir: "data/processed"
+  split_manifests_dir: "data/processed/splits"
+
+  subsets:
+    - name: "Peds1"
+      train_clips: 34
+      test_clips: 36
+      description: "Groups walking toward/away camera, perspective distortion"
+    - name: "Peds2"
+      train_clips: 16
+      test_clips: 12
+      description: "Pedestrians moving parallel to camera plane"
+
+  # Frame-level feature extraction settings
+  frame_sampling_interval: 5      # Sample every N frames (reduce redundancy)
+  image_resize: [64, 64]          # Resize frames for optical flow computation
+
+# =============================================================================
+# Feature Engineering
+# =============================================================================
+features:
+  # Core CrowdGuard AI features extracted from video frames
+  # X_t = [D, V, theta, F, O]
+  core_features:
+    - name: "crowd_density"
+      symbol: "D"
+      description: "Estimated pixel-based crowd density (foreground ratio)"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "motion_magnitude"
+      symbol: "V"
+      description: "Mean optical flow magnitude (crowd movement speed proxy)"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "motion_direction_sin"
+      symbol: "theta_sin"
+      description: "Sine of mean optical flow angle (circular representation)"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "motion_direction_cos"
+      symbol: "theta_cos"
+      description: "Cosine of mean optical flow angle (circular representation)"
+      dtype: float32
+      missing_fill: 1.0
+
+    - name: "optical_flow_x"
+      symbol: "F_x"
+      description: "Mean horizontal optical flow (crowd flow proxy)"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "optical_flow_y"
+      symbol: "F_y"
+      description: "Mean vertical optical flow (crowd flow proxy)"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "zone_occupancy"
+      symbol: "O"
+      description: "Fraction of zone pixels classified as foreground"
+      dtype: float32
+      missing_fill: 0.0
+
+  # Additional derived features
+  derived_features:
+    - name: "delta_density"
+      description: "Change in crowd density from previous frame"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "motion_consistency"
+      description: "Circular std dev of flow angles (low = consistent movement)"
+      dtype: float32
+      missing_fill: 0.0
+
+    - name: "flow_magnitude_std"
+      description: "Std dev of optical flow magnitudes in frame"
+      dtype: float32
+      missing_fill: 0.0
+
+  # Feature column order saved here to prevent schema drift
+  # This list is auto-updated by preprocessing.py
+  feature_columns: null   # populated at runtime
+
+  # Normalization
+  normalization:
+    method: "standard"       # "standard" (z-score) or "minmax"
+    fit_on: "train"          # MUST fit only on training data
+    save_path: "data/processed/scaler.pkl"
+
+# =============================================================================
+# Target Labels
+# =============================================================================
+labels:
+  task_type: "binary_classification"
+  description: >
+    Binary anomaly detection: 0=Normal, 1=Anomalous.
+    These are frame-level ground-truth labels from UCSD dataset.
+    They indicate presence of non-pedestrian entities or anomalous motion.
+    They do NOT represent validated crowd-risk severity levels.
+  classes:
+    0: "Normal"
+    1: "Anomalous"
+  positive_class: 1    # Anomalous = positive class
+
+  # Risk label disclaimer
+  disclaimer: >
+    EXPERIMENTAL BASELINE ONLY. Labels are anomaly flags, not crowd-risk ratings.
+    Do not interpret model outputs as validated safety risk levels without
+    additional expert annotation and independent venue validation.
+
+# =============================================================================
+# Train / Validation / Test Split
+# =============================================================================
+splits:
+  strategy: "clip_level"        # Split by video clip, never by frame
+  description: >
+    Split performed at clip level to prevent data leakage.
+    Adjacent frames from the same clip are never split across train/val/test.
+  ratios:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+  random_seed: 42
+
+  # UCSD provides pre-defined train/test sets; we use them as-is for
+  # Peds1 and Peds2 and carve validation from the UCSD train set.
+  use_predefined_test_split: true

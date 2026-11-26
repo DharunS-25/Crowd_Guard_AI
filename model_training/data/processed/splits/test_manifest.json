@@ -1,0 +1,154 @@
+[
+  {
+    "clip_id": "UCSDped2_Train_Train004",
+    "subset": "UCSDped2",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Train\\Train004",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Train_Train003",
+    "subset": "UCSDped2",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Train\\Train003",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Test_Test012",
+    "subset": "UCSDped2",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Test\\Test012",
+    "gt_path": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Test\\Test012_gt",
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Test_Test006",
+    "subset": "UCSDped2",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Test\\Test006",
+    "gt_path": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Test\\Test006_gt",
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Test_Test036",
+    "subset": "UCSDped1",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test036",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Train_Train016",
+    "subset": "UCSDped2",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Train\\Train016",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Train_Train009",
+    "subset": "UCSDped2",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Train\\Train009",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Train_Train027",
+    "subset": "UCSDped1",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Train\\Train027",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Test_Test027",
+    "subset": "UCSDped1",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test027",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Train_Train002",
+    "subset": "UCSDped1",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Train\\Train002",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Test_Test028",
+    "subset": "UCSDped1",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test028",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Train_Train034",
+    "subset": "UCSDped1",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Train\\Train034",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Train_Train016",
+    "subset": "UCSDped1",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Train\\Train016",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Test_Test021",
+    "subset": "UCSDped1",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test021",
+    "gt_path": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test021_gt",
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Train_Train001",
+    "subset": "UCSDped2",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Train\\Train001",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Train_Train011",
+    "subset": "UCSDped1",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Train\\Train011",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped2_Train_Train015",
+    "subset": "UCSDped2",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped2\\Train\\Train015",
+    "gt_path": null,
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Test_Test014",
+    "subset": "UCSDped1",
+    "official_split": "test",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test014",
+    "gt_path": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Test\\Test014_gt",
+    "split": "test"
+  },
+  {
+    "clip_id": "UCSDped1_Train_Train010",
+    "subset": "UCSDped1",
+    "official_split": "train",
+    "clip_dir": "B:\\Projects\\Crowd_Guard_AI\\model_training\\data\\raw\\ucsd\\UCSDped1\\Train\\Train010",
+    "gt_path": null,
+    "split": "test"
+  }
+]

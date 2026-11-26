@@ -1,0 +1,14 @@
+metric,gru,lstm,winner
+Accuracy,0.7448,0.73,GRU
+F1 (macro),0.624,0.6222,GRU
+Precision (macro),0.6229,0.6167,GRU
+Recall (macro),0.6253,0.631,LSTM
+F1 (anomaly class),0.411,0.4204,LSTM
+Recall (anomaly)  [<--] Safety Critical,0.4167,0.4583,LSTM
+Precision (anomaly),0.4054,0.3882,GRU
+False Negative Rate (anomaly)  [<--] Lower is better,0.5833,0.5417,LSTM
+ROC-AUC,0.6780922431865829,0.7470911949685535,LSTM
+Parameter Count,41698,54882,GRU
+Model Size (KB),166.87,218.37,GRU
+Inference Latency Mean (ms)  [<--] Lower is better,1.0196,0.3773,LSTM
+Inference Latency P95 (ms)   [<--] Lower is better,1.3636,0.9023,LSTM

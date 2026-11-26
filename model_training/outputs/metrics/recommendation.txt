@@ -1,0 +1,20 @@
+DEPLOYMENT RECOMMENDATION
+============================================================
+
+Primary evaluation criteria (safety-oriented):
+  50% weight: Anomaly Recall (minimise missed events)
+  30% weight: Macro F1 (overall classification quality)
+  20% weight: ROC-AUC (discrimination ability)
+
+  GRU score:  0.5312
+  LSTM score: 0.5652
+
+VERDICT: LSTM outperforms GRU on safety-weighted score (0.5652 vs 0.5312).
+  [-->] Recommend LSTM for deployment.
+
+IMPORTANT DISCLAIMER:
+  These are experimental results on the UCSD anomaly dataset.
+  The model has NOT been validated on independent controlled-event
+  venue recordings. Do not claim production readiness until
+  sufficient real-world venue validation is completed.
+============================================================

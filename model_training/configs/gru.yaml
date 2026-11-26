@@ -1,0 +1,100 @@
+# =============================================================================
+# CrowdGuard AI — GRU Model Configuration
+# =============================================================================
+
+model:
+  name: "CrowdGuardGRU"
+  type: "gru"
+  description: >
+    Gated Recurrent Unit model for crowd anomaly detection.
+    Trained on UCSD pedestrian walkway sequences.
+    Task: binary classification (Normal vs Anomalous).
+
+# =============================================================================
+# Architecture
+# =============================================================================
+architecture:
+  # Input dimension is determined at runtime from dataset feature columns
+  input_dim: null           # set by preprocessing — do not hard-code
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.3
+  bidirectional: false      # keep false for real-time inference compatibility
+  output_dim: 2             # [Normal, Anomalous]
+
+  # FC head
+  fc_hidden_dim: 32         # intermediate FC layer; set 0 to skip
+  use_batch_norm: false     # BN can cause issues with small sequences
+
+# =============================================================================
+# Sequence Parameters
+# =============================================================================
+sequence:
+  length: 20                # L — number of time steps per input window
+  stride: 1                 # sliding window stride
+  sampling_interval: 5      # must match dataset.yaml frame_sampling_interval
+
+# =============================================================================
+# Training
+# =============================================================================
+training:
+  epochs: 80
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 1.0e-4
+  optimizer: "adamw"        # "adamw" or "adam"
+  gradient_clip_norm: 1.0   # max gradient norm; null to disable
+
+  # Loss
+  loss: "cross_entropy"     # with class weights if imbalanced
+  use_class_weights: true   # computed from training label distribution
+
+  # Learning rate scheduling
+  scheduler:
+    type: "reduce_on_plateau"   # "cosine_annealing", "step", or null
+    patience: 8
+    factor: 0.5
+    min_lr: 1.0e-6
+
+  # Early stopping
+  early_stopping:
+    patience: 15
+    monitor: "val_f1"           # metric to monitor
+    mode: "max"                 # maximize F1
+    min_delta: 0.001
+
+  # Checkpointing
+  checkpoint:
+    save_dir: "outputs/checkpoints/gru"
+    save_best_only: true
+    monitor: "val_f1"
+
+  # Reproducibility
+  seed: 42
+
+# =============================================================================
+# Evaluation
+# =============================================================================
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision_macro"
+    - "recall_macro"
+    - "f1_macro"
+    - "roc_auc"
+    - "confusion_matrix"
+    - "per_class_report"
+  positive_class_metrics:
+    - "precision_anomaly"
+    - "recall_anomaly"        # critical: false-negative rate for anomalies
+    - "f1_anomaly"
+    - "false_negative_rate"
+
+# =============================================================================
+# Inference
+# =============================================================================
+inference:
+  model_id: "crowdguard_gru_v1"
+  output_labels: "experimental"   # mark outputs as experimental
+  confidence_threshold: 0.5
+  output_class_probabilities: true

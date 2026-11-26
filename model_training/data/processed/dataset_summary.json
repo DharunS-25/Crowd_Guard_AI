@@ -1,0 +1,66 @@
+{
+  "dataset": "UCSD Anomaly Detection Dataset",
+  "feature_columns": [
+    "crowd_density",
+    "motion_magnitude",
+    "motion_direction_sin",
+    "motion_direction_cos",
+    "optical_flow_x",
+    "optical_flow_y",
+    "zone_occupancy",
+    "delta_density",
+    "motion_consistency",
+    "flow_magnitude_std"
+  ],
+  "feature_dim": 10,
+  "seq_len": 20,
+  "stride": 1,
+  "sampling_interval": 5,
+  "total_clips": 98,
+  "failed_clips": [],
+  "splits": {
+    "train": {
+      "n_sequences": 1263,
+      "n_normal": 1072,
+      "n_anomaly": 191,
+      "pct_anomaly": 15.1,
+      "shape_X": [
+        1263,
+        20,
+        10
+      ]
+    },
+    "val": {
+      "n_sequences": 250,
+      "n_normal": 218,
+      "n_anomaly": 32,
+      "pct_anomaly": 12.8,
+      "shape_X": [
+        250,
+        20,
+        10
+      ]
+    },
+    "test": {
+      "n_sequences": 337,
+      "n_normal": 265,
+      "n_anomaly": 72,
+      "pct_anomaly": 21.4,
+      "shape_X": [
+        337,
+        20,
+        10
+      ]
+    }
+  },
+  "scaler": {
+    "method": "StandardScaler",
+    "fit_on": "train"
+  },
+  "elapsed_seconds": 662.9,
+  "label_schema": {
+    "0": "Normal",
+    "1": "Anomalous",
+    "note": "Binary anomaly labels from UCSD dataset. NOT validated crowd-risk classes. Model performs anomaly detection as a proxy."
+  }
+}

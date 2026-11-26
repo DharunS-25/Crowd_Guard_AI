@@ -1,0 +1,95 @@
+# =============================================================================
+# CrowdGuard AI — LSTM Model Configuration
+# Mirrors GRU config to ensure fair comparison
+# =============================================================================
+
+model:
+  name: "CrowdGuardLSTM"
+  type: "lstm"
+  description: >
+    Long Short-Term Memory model for crowd anomaly detection.
+    Trained on UCSD pedestrian walkway sequences.
+    Task: binary classification (Normal vs Anomalous).
+    Uses same dataset, splits, features, and evaluation as GRU model.
+
+# =============================================================================
+# Architecture
+# =============================================================================
+architecture:
+  input_dim: null           # set by preprocessing — do not hard-code
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.3
+  bidirectional: false      # keep false for real-time inference compatibility
+  output_dim: 2             # [Normal, Anomalous]
+
+  fc_hidden_dim: 32
+  use_batch_norm: false
+
+# =============================================================================
+# Sequence Parameters  (MUST match GRU for fair comparison)
+# =============================================================================
+sequence:
+  length: 20
+  stride: 1
+  sampling_interval: 5      # must match dataset.yaml frame_sampling_interval
+
+# =============================================================================
+# Training
+# =============================================================================
+training:
+  epochs: 80
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 1.0e-4
+  optimizer: "adamw"
+  gradient_clip_norm: 1.0
+
+  loss: "cross_entropy"
+  use_class_weights: true
+
+  scheduler:
+    type: "reduce_on_plateau"
+    patience: 8
+    factor: 0.5
+    min_lr: 1.0e-6
+
+  early_stopping:
+    patience: 15
+    monitor: "val_f1"
+    mode: "max"
+    min_delta: 0.001
+
+  checkpoint:
+    save_dir: "outputs/checkpoints/lstm"
+    save_best_only: true
+    monitor: "val_f1"
+
+  seed: 42
+
+# =============================================================================
+# Evaluation  (MUST match GRU for fair comparison)
+# =============================================================================
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision_macro"
+    - "recall_macro"
+    - "f1_macro"
+    - "roc_auc"
+    - "confusion_matrix"
+    - "per_class_report"
+  positive_class_metrics:
+    - "precision_anomaly"
+    - "recall_anomaly"
+    - "f1_anomaly"
+    - "false_negative_rate"
+
+# =============================================================================
+# Inference
+# =============================================================================
+inference:
+  model_id: "crowdguard_lstm_v1"
+  output_labels: "experimental"
+  confidence_threshold: 0.5
+  output_class_probabilities: true
