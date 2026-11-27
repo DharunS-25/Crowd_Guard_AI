@@ -1,0 +1,77 @@
+# CrowdGuard monorepo root.
+# - The root project is the `crowdguard` core library (vision pipeline, model adapters, risk policy, overlay).
+# - Other Python units have their own pyproject.toml: packages/contracts, packages/platform, apps/api, apps/worker.
+# - model_training/ is research and intentionally NOT part of this workspace.
+# - Existing commands keep working unchanged: `pip install -r requirements.txt`, `python -m crowdguard.main`,
+#   `streamlit run app.py`.
+# Tooling decision D-19 (provisional): pip + editable installs; see docs/architecture/repository-structure.md §4.
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crowdguard"
+version = "0.1.0"
+description = "CrowdGuard core: video features, model adapters, risk policy, overlay"
+requires-python = ">=3.10"
+dependencies = [
+  "crowdguard-contracts",
+  "numpy>=1.26",
+  "opencv-python>=4.9",
+  "pandas>=2.1",
+  "PyYAML>=6.0.1",
+]
+
+[project.optional-dependencies]
+detect = ["ultralytics>=8.3.0"]
+
+[tool.setuptools.packages.find]
+include = ["crowdguard*"]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+pythonpath = [".", "packages/contracts", "packages/platform", "apps/api", "apps/worker"]
+testpaths = [
+  "tests/core",
+  "packages/contracts/tests",
+  "packages/platform/tests",
+  "apps/api/tests",
+  "apps/worker/tests",
+]
+
+# Import boundaries from docs/architecture/repository-structure.md §3.
+# Run: PYTHONPATH=.;packages/contracts;packages/platform;apps/api;apps/worker lint-imports
+[tool.importlinter]
+root_packages = ["crowdguard", "crowdguard_contracts", "crowdguard_platform", "crowdguard_api", "crowdguard_worker"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "contracts is a leaf package"
+type = "forbidden"
+source_modules = ["crowdguard_contracts"]
+forbidden_modules = ["crowdguard", "crowdguard_platform", "crowdguard_api", "crowdguard_worker", "cv2", "numpy", "fastapi", "boto3"]
+
+[[tool.importlinter.contracts]]
+name = "core does not depend on platform, apps, web or cloud SDKs"
+type = "forbidden"
+source_modules = ["crowdguard"]
+forbidden_modules = ["crowdguard_platform", "crowdguard_api", "crowdguard_worker", "fastapi", "boto3"]
+
+[[tool.importlinter.contracts]]
+name = "platform does not depend on core, apps, or vision libraries"
+type = "forbidden"
+source_modules = ["crowdguard_platform"]
+forbidden_modules = ["crowdguard", "crowdguard_api", "crowdguard_worker", "fastapi", "cv2"]
+
+[[tool.importlinter.contracts]]
+name = "api never imports core, worker, or vision libraries"
+type = "forbidden"
+source_modules = ["crowdguard_api"]
+forbidden_modules = ["crowdguard", "crowdguard_worker", "cv2"]
+
+[[tool.importlinter.contracts]]
+name = "worker does not import api"
+type = "forbidden"
+source_modules = ["crowdguard_worker"]
+forbidden_modules = ["crowdguard_api"]

@@ -1,9 +1,68 @@
-.venv/
+# Python bytecode and test/tool caches.
 __pycache__/
-*.pyc
-runs/
-data/videos/*
-!data/videos/.gitkeep
-outputs/*
-!outputs/.gitkeep
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local Python environments.
+.venv/
+venv/
+env/
+ENV/
+
+# Local Streamlit secrets should never be committed.
+.streamlit/secrets.toml
+
+# Local environment values, Claude project preferences, and runtime state.
+.env
+.env.*
+!.env.example
+CLAUDE.local.md
+.claude/settings.local.json
+/var/
+/storage/
+/instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Model weights and experiment tracking output generated during training/inference.
 *.pt
+*.pth
+*.ckpt
+runs/
+wandb/
+mlruns/
+
+# Local crowd video inputs. Keep the directory marker so the folder is present on clone.
+/data/videos/*
+!/data/videos/.gitkeep
+
+# Generated pipeline output (annotated videos and feature CSVs).
+/outputs/*
+!/outputs/.gitkeep
+
+# Local dataset copies, derived training arrays, and model-training results.
+# Keep source code and configuration tracked; download or regenerate these assets locally.
+/model_training/data/raw/*
+!/model_training/data/raw/.gitkeep
+/model_training/data/processed/*
+!/model_training/data/processed/.gitkeep
+/model_training/outputs/*
+!/model_training/outputs/.gitkeep
+
+# Common operating-system metadata.
+.DS_Store
+Thumbs.db
+
+# Monorepo (JS workspace, build output, local tooling scratch).
+node_modules/
+apps/web/dist/
+packages/api-client/dist/
+tests/e2e/test-results/
+tests/e2e/playwright-report/
+*.egg-info/

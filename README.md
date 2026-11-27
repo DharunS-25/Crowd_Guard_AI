@@ -6,6 +6,30 @@ This project implements the first computer-vision milestone:
 
 It does not yet include the GRU/LSTM risk predictor, FastAPI service, database, or React dashboard. Those should be added after validating the extracted features.
 
+## Repository layout
+
+The repository is moving to a monorepo layout. Today only the prototype exists. Everything under `apps/`, `packages/`, `infra/`, and `tests/` is **planned, not yet created**.
+
+| Path | Status | Purpose |
+|---|---|---|
+| `app.py` | Current | Streamlit demo dashboard (section "Single dashboard mode") |
+| `crowdguard/` | Current | Video pipeline CLI (`python -m crowdguard.main`); becomes the core vision and model library |
+| `config/` | Current | Example zone polygons with demonstration capacities |
+| `model_training/` | Current | GRU/LSTM experiments on UCSD Normal/Anomalous labels (see `model_training/README.md`) |
+| `apps/api`, `apps/worker`, `apps/web` | Planned | FastAPI service, analysis worker, React + Vite UI |
+| `packages/contracts`, `packages/platform`, `packages/api-client` | Planned | Shared data contracts, SQLite and S3 access, generated TypeScript client |
+| `infra/s3`, `tests/` | Planned | S3 bucket templates; core, E2E, and fixture tests |
+| `docs/` | Current | Architecture, risk model limits, E2E cases, implementation plan |
+
+The commands in this README cover only the current prototype. They keep working while the monorepo is built: existing folders stay in place, and new code goes into new folders.
+
+More detail:
+
+- [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md): commented directory map, current and planned.
+- [docs/architecture/repository-structure.md](docs/architecture/repository-structure.md): monorepo layout and dependency rules.
+- [docs/architecture/system-architecture.md](docs/architecture/system-architecture.md): product architecture.
+- [CLAUDE.md](CLAUDE.md): Claude Code instructions; path-scoped rules are in `.claude/rules/`.
+
 ## 1. Requirements
 
 - Windows 10/11, macOS, or Linux
@@ -108,19 +132,24 @@ The initial implementation uses a bottom-centre point of each bounding box to as
 
 - `Cannot open video source`: verify the path and that the file plays in a media player.
 - Missing module: activate `.venv` and run `pip install -r requirements.txt`.
+- `ModuleNotFoundError: imageio_ffmpeg` when starting the dashboard: `app.py` imports it, but `requirements.txt` does not list it yet. Run `pip install imageio-ffmpeg`.
 - Slow processing: use a shorter/lower-resolution clip, reduce `--imgsz` to 480, and close other applications.
 - No IDs: make sure tracking is enabled, use a video rather than isolated images, and inspect whether people are visible enough for detection.
 - Wrong zones: edit `config/zones.json` for your camera's actual view.
 - MP4 writer issue: try a different output directory or use `--no-save-video`.
 
-## 9. Suggested next phases
+## 9. Next phases
 
-1. Validate detections and zones on multiple clips.
-2. Improve directional flow counting at entry and exit lines.
-3. Save per-interval feature records to SQLite/PostgreSQL.
-4. Build a FastAPI endpoint to start jobs and read metrics.
-5. Build a React dashboard.
-6. Train/evaluate a GRU/LSTM model only after defining labels and a valid train/validation/test split.
+The product roadmap is in the [implementation plan](docs/superpowers/plans/2026-11-26-crowdguard-product-architecture.md). In order:
+
+1. Monorepo scaffold.
+2. Shared contracts.
+3. The upload-to-annotated-result slice (direct browser-to-S3 upload, FastAPI, worker, React UI).
+4. Experimental model evidence.
+5. A validated venue-risk model.
+6. Hardening before any internet-facing deployment.
+
+Multi-camera support and evacuation planning are later, separately reviewed phases. The current GRU/LSTM models predict UCSD Normal/Anomalous labels, not Low/Medium/High venue risk. See [risk-assessment.md](docs/architecture/risk-assessment.md).
 
 
 ## Single dashboard mode (Streamlit)
@@ -139,4 +168,4 @@ streamlit run app.py
 
 Streamlit opens a browser tab, usually at `http://localhost:8501`. If it does not open automatically, paste that address into your browser. Upload an MP4 in the sidebar, choose model settings, and click **Process video**. The dashboard then displays the annotated video, latest zone counts, zone metrics, feature trends, and CSV/video download controls.
 
-The dashboard calls the existing processing pipeline as a local subprocess. The first run may download YOLO model weights. It is a local demo dashboard, not yet the final React + FastAPI production architecture.
+The dashboard calls the existing processing pipeline as a local subprocess. The first run may download YOLO model weights. It is a local demo dashboard, not the planned React + FastAPI product (`apps/web`, `apps/api`). It stays available until a reviewed migration replaces it.

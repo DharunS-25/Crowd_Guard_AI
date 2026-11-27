@@ -1,0 +1,16 @@
+# Thresholds below are SYNTHETIC test values with a test source; they are not crowd-safety guidance.
+policy_id: fixture-rules
+version: 1.0.0
+owner: tests
+approved_by: null
+assessment_status: DEMONSTRATION
+allowed_quality_states: [OK]
+accepted_label_spaces: {}
+rule_signals:
+  - signal_id: count_end
+    feature: people_count_end
+    thresholds: {MEDIUM: 2, HIGH: 5}
+    threshold_source: "synthetic test fixture (tests/fixtures/policies/demo_rules.yaml)"
+precedence: rules_only
+disagreement_rule: null
+persistence: null

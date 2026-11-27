@@ -1,0 +1,14 @@
+policy_id: fixture-demo-incomplete
+version: 1.0.0
+owner: tests
+approved_by: null
+assessment_status: DEMONSTRATION
+allowed_quality_states: [OK]
+accepted_label_spaces:
+  venue_risk_v1:
+    min_validation_status: DEMONSTRATION
+    require_calibrated: false
+rule_signals: []
+precedence: model_only
+disagreement_rule: null
+persistence: null

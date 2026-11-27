@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crowdguard-worker"
+version = "0.1.0"
+description = "CrowdGuard analysis worker: probe, analyze, artifacts"
+requires-python = ">=3.10"
+dependencies = ["crowdguard", "crowdguard-contracts", "crowdguard-platform", "imageio-ffmpeg>=0.4.9"]
+
+[project.optional-dependencies]
+detect = ["crowdguard[detect]"]
+test = ["moto[s3,server]>=5.0", "pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["crowdguard_worker*"]

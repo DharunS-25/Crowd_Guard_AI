@@ -1,0 +1,24 @@
+# CrowdGuard default decision policy (risk-assessment.md §6).
+# No severity model is validated and no venue thresholds are approved (D-01..D-05), so this policy accepts no label
+# space and declares its rule signals WITHOUT thresholds. Every real window therefore yields INSUFFICIENT_DATA with
+# NO_ELIGIBLE_SEVERITY_EVIDENCE and POLICY_THRESHOLDS_UNCONFIGURED. Do not add numbers here without a named source,
+# owner, and revision approved by the venue's safety owner.
+policy_id: crowdguard-default
+version: 0.1.0
+owner: CrowdGuard engineering
+approved_by: null
+assessment_status: EXPERIMENTAL
+allowed_quality_states: [OK]
+accepted_label_spaces: {}
+rule_signals:
+  - signal_id: occupancy_ratio_vs_capacity
+    feature: occupancy_ratio
+    thresholds: null
+    threshold_source: null
+  - signal_id: image_density_proxy
+    feature: image_density_proxy_per_10000_px
+    thresholds: null
+    threshold_source: null
+precedence: null
+disagreement_rule: null
+persistence: null
